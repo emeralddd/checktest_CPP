@@ -19,37 +19,47 @@ const l2 mod = 1000000007;
 using namespace std;
 string compileCommandPrefix,currentPath,compareCmd;
 int tests;
+string slash,quote,backslash;
+ifstream file;
 void gcc() {
-    freopen("config/gcc.dat","r",stdin);
+    cout<<"Searching for GCC configuration ...\n";
     string config;
-    getline(cin,config);
+    file.open(("conf"+slash+"gcc.txt").c_str());
+        getline(file,config);
+    file.close();
     if(config[0]=='!') compileCommandPrefix="g++.exe";
-    else compileCommandPrefix=char(34)+config+char(34);
+    else compileCommandPrefix=quote+config+quote;
 }
 void testGCC() {
+    cout<<"Checking GCC configuration ...\n";
+
     string basic_cmd=compileCommandPrefix+" -v > nul 2> logs/config_err_logs.txt";
     const char *cmd = basic_cmd.c_str();
     bool status = system(cmd);
     if(status) {
-        cout<<"There is an error, please check again your gcc.dat!";
+        cout<<"There is an error, please check again your gcc.txt!";
         exit(0);
     }
 }
 void getCurrentPath() {
-    system("echo %cd% > config/tmp.dat");
-    freopen("config/tmp.dat","r",stdin);
-    getline(cin,currentPath);
+    cout<<"Getting Current Path ...\n";
+    system("echo %cd% > tmp");
+
+    file.open("tmp");
+        getline(file,currentPath);
+    file.close();
+
     while(currentPath[currentPath.size()-1]==' ') currentPath.erase(currentPath.size()-1,1);
 }
 void compileFile(string fn) {
     cout<<"Compiling File: "<<fn<<".cpp\n";
-    bool status = system((compileCommandPrefix + " -O2 -std=c++11 -c "+currentPath+char(92)+fn+".cpp -o "+currentPath+char(92)+"obj/"+fn+".o 2> logs/compile_err_logs.txt").c_str());
+    bool status = system((compileCommandPrefix + " -O2 -std=c++11 -c "+currentPath+backslash+fn+".cpp -o "+currentPath+backslash+"obj/"+fn+".o 2> logs/compile_err_logs.txt").c_str());
     if(status) {
         cout<<"There is some errors, check compile_err_logs.txt for more details!";
         exit(0);
     }
 
-    status = system((compileCommandPrefix + " -o "+currentPath+char(92)+"bin/"+fn+".exe "+currentPath+char(92)+"obj/"+fn+".o 2> logs/compile_err_logs.txt").c_str());
+    status = system((compileCommandPrefix + " -o "+currentPath+backslash+"bin/"+fn+".exe "+currentPath+char(92)+"obj/"+fn+".o 2> logs/compile_err_logs.txt").c_str());
 
     if(status) {
         cout<<"There is some errors, check compile_err_logs.txt for more details!";
@@ -60,34 +70,41 @@ void compileFile(string fn) {
 }
 void execute(string fn) {
     string s="";
-    bool status = system((s+char(34)+currentPath+char(92)+fn+char(34)+" 2> logs/runtime_err_logs.txt").c_str());
+    bool status = system((s+quote+currentPath+backslash+fn+quote+" 2> logs/runtime_err_logs.txt").c_str());
     if(status) {
         cout<<"There is some errors, check runtime_err_logs.txt for more details!";
         exit(0);
     }
 }
 void getOutputPath() {
-    freopen("config/compare.txt","r",stdin);
-    string output_can,output_jud;
-    getline(cin,output_can);
-    getline(cin,output_jud);
+    cout<<"Getting Output and Answer Path ...\n";
 
+    string output_can,output_jud;
+    file.open(("conf"+slash+"compare.txt").c_str());
+        getline(file,output_can);
+        getline(file,output_jud);
+    file.close();
+
+    cout<<"-------------------------------------------------------\n";
     cout<<"OUTPUT: "<<output_can<<"\nANS: "<<output_jud<<"\n";
 
     compareCmd="fc";
     compareCmd=compareCmd+" "+output_can+" "+output_jud+" > nul 2> logs/compare_err_logs.txt";
 }
 int main() {
+    slash+=char(47);
+    backslash+=char(92);
+    quote+=char(34);
 
+    gcc();
+    testGCC();
+    getCurrentPath();
+    getOutputPath();
+
+    cout<<"-------------------------------------------------------\n";
     cout<<"Welcome!\nDo you want to rebuild? (Y/N)\n";
     char res;
     cin>>res;
-
-    gcc();
-
-    testGCC();
-
-    getCurrentPath();
 
     if(res=='Y'||res=='y') {
         compileFile("genInp");
@@ -95,9 +112,10 @@ int main() {
         compileFile("sourceCode");
     }
 
-    getOutputPath();
+    file.open(("conf"+slash+"tests.txt").c_str());
+        file>>tests;
+    file.close();
 
-    tests=5;
     cout<<"Number of Testcases will be tested: "<<tests<<"\n";
 
     cout<<"-------------------------------------------------------\n";
@@ -110,13 +128,11 @@ int main() {
 
         bool status=system(compareCmd.c_str());
         if(status) {
-            cout<<"There is some differs!";
+            cout<<"There is some differs or errors!";
             exit(0);
         }
         cout<<"Passed!\n";
     }
 
     cout<<"Passed All!";
-
-//    system("")
 }

@@ -1,6 +1,10 @@
 # Check test using CPP
 
-## Setting: config/*
+## Setting: conf/*
+
+### tests.txt
+
+Number of tests will be tested!
 
 ### compare.txt
 
@@ -8,19 +12,17 @@ First line, write the path of file .OUT
 
 Second line, write the path of file .ANS
 
-### gcc.dat
+### gcc.txt
 
 If you can use `g++.exe` command in CMD, just write `!`
 
-But if you can't, write the path to g++.exe, normally at `C:\Program Files\CodeBlocks\MinGW\bin\g++.exe`
+But if you can't, write the path to `g++.exe`, normally at `C:\Program Files\CodeBlocks\MinGW\bin\g++.exe`
 
 ## Source
 
 ### MAIN.cpp
 
 This is the main file, only edit if you know what you are doing.
-
-To edit number of tests, find `tests=5;` and edit it!
 
 ### genInp.cpp
 
