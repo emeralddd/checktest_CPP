@@ -59,7 +59,7 @@ void compileFile(string fn) {
         exit(0);
     }
 
-    status = system((compileCommandPrefix + " -o "+currentPath+backslash+"bin/"+fn+".exe "+currentPath+char(92)+"obj/"+fn+".o 2> logs/compile_err_logs.txt").c_str());
+    status = system((compileCommandPrefix + " -o "+currentPath+backslash+"bin/"+fn+".exe "+currentPath+backslash+"obj/"+fn+".o 2> logs/compile_err_logs.txt").c_str());
 
     if(status) {
         cout<<"There is some errors, check compile_err_logs.txt for more details!";
