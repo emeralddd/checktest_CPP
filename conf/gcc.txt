@@ -1,1 +1,1 @@
-!
+C:\Program Files\CodeBlocks\MinGW\bin\g++.exe

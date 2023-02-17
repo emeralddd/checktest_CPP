@@ -49,6 +49,8 @@ void getCurrentPath() {
         getline(file,currentPath);
     file.close();
 
+//    cout<<currentPath<<endl;
+
     while(currentPath[currentPath.size()-1]==' ') currentPath.erase(currentPath.size()-1,1);
 }
 void compileFile(string fn) {
@@ -76,41 +78,35 @@ void execute(string fn) {
         exit(0);
     }
 }
-void getOutputPath() {
+void getOutputPath(string taskName) {
     cout<<"Getting Output and Answer Path ...\n";
 
-    string output_can,output_jud;
-    file.open(("conf"+slash+"compare.txt").c_str());
-        getline(file,output_can);
-        getline(file,output_jud);
-    file.close();
+    string outputCan=taskName+".OUT",outputJud=taskName+".ANS";
 
     cout<<"-------------------------------------------------------\n";
-    cout<<"OUTPUT: "<<output_can<<"\nANS: "<<output_jud<<"\n";
+    cout<<"OUTPUT: "<<outputCan<<"\nANS: "<<outputJud<<"\n";
 
     compareCmd="fc";
-    compareCmd=compareCmd+" "+output_can+" "+output_jud+" > nul 2> logs/compare_err_logs.txt";
+    compareCmd=compareCmd+" "+outputCan+" "+outputJud+" > nul 2> logs/compare_err_logs.txt";
 }
-int main() {
+int main(int argc, char** argv) {
     slash+=char(47);
     backslash+=char(92);
     quote+=char(34);
 
+//    argv[0]="AHAHA";
+
     gcc();
     testGCC();
     getCurrentPath();
-    getOutputPath();
+    getOutputPath(argv[1]);
 
     cout<<"-------------------------------------------------------\n";
-    cout<<"Welcome!\nDo you want to rebuild? (Y/N)\n";
-    char res;
-    cin>>res;
+    cout<<"Task name: "<<argv[1]<<"\n";
 
-    if(res=='Y'||res=='y') {
-        compileFile("genInp");
-        compileFile("genOut");
-        compileFile("sourceCode");
-    }
+    compileFile("genInp");
+    compileFile("genOut");
+    compileFile("sourceCode");
 
     file.open(("conf"+slash+"tests.txt").c_str());
         file>>tests;

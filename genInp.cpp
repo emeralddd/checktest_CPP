@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-long long randInt(long long _L,long long _R) {
+long long random(long long _L,long long _R) {
   	long long tmp=0;
  	for(int i=0; i<4; i++)
 		tmp=(tmp<<15)^(rand()&((1<<15)-1));
@@ -10,5 +10,15 @@ long long randInt(long long _L,long long _R) {
 int main() {
     srand(time(nullptr));
     freopen("ahaha.inp","w",stdout);
-    cout<<randInt(1,100)<<" "<<randInt(1,100);
+    int n=50,q=50;
+    cout<<n<<" "<<q<<endl;
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++) {
+            cout<<random(0,1);
+        }
+        cout<<'\n';
+    }
+    while(q--) {
+        cout<<random(1,n)<<" "<<random(1,n)<<'\n';
+    }
 }

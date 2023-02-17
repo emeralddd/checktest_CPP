@@ -1,2 +1,0 @@
-ahaha.ans
-ahaha.out

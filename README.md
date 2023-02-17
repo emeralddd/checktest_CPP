@@ -1,22 +1,23 @@
 # Check test using CPP
 
-## Setting: conf/*
+## Setting: conf/\*
 
 ### tests.txt
 
 Number of tests will be tested!
 
-### compare.txt
-
-First line, write the path of file .OUT
-
-Second line, write the path of file .ANS
-
 ### gcc.txt
 
-If you can use `g++.exe` command in CMD, just write `!`
+Open CMD, type `g++.exe`, if the message is
 
-But if you can't, write the path to `g++.exe`, normally at `C:\Program Files\CodeBlocks\MinGW\bin\g++.exe`
+```
+g++: fatal error: no input files
+compilation terminated.
+```
+
+just write `!`
+
+But if you can't, write the path to `g++.exe`, deafault at `C:\Program Files\CodeBlocks\MinGW\bin\g++.exe`
 
 ## Source
 
@@ -36,4 +37,4 @@ Write the correct code to solve the problem! Remember to write to `.ans` file!
 
 Write the code you want to check!
 
-## To start, just compile and debug the MAIN.cpp
+## To start, open cmd in folder, type `MAIN.exe [taskname]`.
