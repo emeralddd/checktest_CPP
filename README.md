@@ -8,7 +8,7 @@ Number of tests will be tested!
 
 ### gcc.txt
 
-Open CMD, type `g++.exe`, if the message is
+- Open CMD, type `g++.exe`, if the message is
 
 ```
 g++: fatal error: no input files
@@ -17,7 +17,7 @@ compilation terminated.
 
 just write `!`
 
-But if you can't, write the path to `g++.exe`, deafault at `C:\Program Files\CodeBlocks\MinGW\bin\g++.exe`
+- But if you can't, write the path to `g++.exe`, deafault at `C:\Program Files\CodeBlocks\MinGW\bin\g++.exe`
 
 ## Source
 
